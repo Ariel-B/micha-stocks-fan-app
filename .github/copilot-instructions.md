@@ -3,8 +3,6 @@
 ## Project Overview
 This is the Next.js frontend for the Micha Stocks Course fan site. It displays lessons, transcripts, and course content in an interactive, infographic-style format.
 
-> **The data pipeline lives in a separate repository:** [micha-stocks-fan](https://github.com/Ariel-B/micha-stocks-fan)
-
 ## Repository Structure
 - `src/app/` — Next.js App Router pages and layouts
 - `src/components/` — Reusable React components
