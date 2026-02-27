@@ -9,7 +9,7 @@ type Lesson = {
   source?: string;
   learn_items?: string[];
   concepts: { title: string; body: string; timestamp?: number }[];
-  takeaways?: string[];
+  takeaways?: { text: string; level: number }[];
   glossary?: { term: string; definition: string }[];
   important_context?: string | null;
 };
