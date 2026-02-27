@@ -48,4 +48,10 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Serve the production build
+npm start
+
+# Run ESLint
+npm run lint
 ```

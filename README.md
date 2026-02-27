@@ -4,10 +4,11 @@ A web portal for the Micha Stocks Course that displays lessons, transcripts, and
 
 ## Tech Stack
 
-- **Framework:** Next.js (App Router)
+- **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS
+- **Styling:** Tailwind CSS v4
 - **Linting:** ESLint
+- **Key dependencies:** `framer-motion`, `lucide-react`, `react-markdown`, `recharts`, `clsx`, `tailwind-merge`
 
 ## Project Structure
 
@@ -27,7 +28,7 @@ src/
 └── data/
     ├── course.json       # Generated course data (do not edit manually)
     ├── sections.json     # Generated section data (do not edit manually)
-    └── sections.ts       # Section data runtime interface
+    └── sections.ts       # Runtime interface — exports SECTIONS, LESSON_SECTION, SECTION_COLORS, getSectionForLesson, findSection, getLessonNum
 ```
 
 ## Getting Started
@@ -47,8 +48,14 @@ npm run dev
 ## Building for Production
 
 ```bash
-npm run build
-npm start
+npm run build   # Compile & generate static pages
+npm start       # Serve the production build
+```
+
+## Linting
+
+```bash
+npm run lint
 ```
 
 ## Updating Course Data
@@ -63,8 +70,9 @@ All original video content, audio, and spoken material are the intellectual prop
 
 > **Not financial advice.** Nothing on this site — including lesson summaries, transcripts, or any other content — constitutes financial advice. Always do your own research and consult a qualified financial professional before making investment decisions.
 
-## Notes
+## Data Types
 
-- All frontend code should be written in TypeScript.
-- Follow existing component naming conventions (PascalCase).
-- `src/data/course.json` and `src/data/sections.json` are auto-generated — do not edit manually.
+Key types used across the app:
+- `Lesson.takeaways` — `{ text: string; level: number }[]` (not a plain string array)
+- `Lesson.concepts` — `{ title: string; body: string; timestamp?: number }[]`
+- `SectionDef` — `{ id: string; label: string; color: string }` (from `sections.ts`)

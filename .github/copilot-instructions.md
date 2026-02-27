@@ -31,8 +31,21 @@ This is the Next.js frontend for the Micha Stocks Course fan site. It displays l
 npm install       # Install dependencies
 npm run dev       # Start dev server (http://localhost:3000)
 npm run build     # Build for production
+npm start         # Serve the production build
 npm run lint      # Run ESLint
 ```
+
+## Key Dependencies
+- `framer-motion` — animations
+- `lucide-react` — icons
+- `react-markdown` — markdown rendering (used in `InlineMarkdown.tsx`)
+- `recharts` — charts
+- `clsx` + `tailwind-merge` — conditional class utilities
+
+## Data Types
+- `Lesson.takeaways` is `{ text: string; level: number }[]` — **not** `string[]`
+- `Lesson.concepts` is `{ title: string; body: string; timestamp?: number }[]`
+- `SectionDef` is `{ id: string; label: string; color: string }` (exported from `sections.ts`)
 
 ## Git
 - **Never run `git push` unless the user explicitly asks.** Commit freely, but always wait for a "push" instruction before pushing to remote.
