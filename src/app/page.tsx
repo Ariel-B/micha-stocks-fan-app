@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
+import Link from 'next/link';
 import courseDataRaw from '@/data/course.json';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, BarChart2 } from 'lucide-react';
 import CourseBrowser from '@/components/CourseBrowser';
 
 type Lesson = {
@@ -33,6 +34,15 @@ export default function Home() {
             Your comprehensive guide to the stock market, investing, and financial freedom.
             Explore the lessons below to start your journey.
           </p>
+          <div className="mt-6">
+            <Link
+              href="/reports"
+              className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/30 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors backdrop-blur-sm"
+            >
+              <BarChart2 className="w-4 h-4" />
+              Daily Market Reports →
+            </Link>
+          </div>
         </div>
       </header>
 
