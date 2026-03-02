@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, ExternalLink, ChevronRight } from 'lucide-react';
 import { getReport, getAllReportParams, formatReportDate } from '@/lib/reports';
 import VideoPlayer from '@/components/VideoPlayer';
-import ReportMarkdown from '@/components/ReportMarkdown';
+import PrintableReportContent from '@/components/PrintableReportContent';
 
 export async function generateStaticParams() {
   return getAllReportParams();
@@ -82,9 +82,7 @@ export default async function ReportPage({
         </div>
 
         {/* Markdown report */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10">
-          <ReportMarkdown content={report.content} />
-        </div>
+        <PrintableReportContent content={report.content} title={report.title} />
 
         {/* Disclaimer */}
         <p className="text-xs text-slate-400 text-center">
