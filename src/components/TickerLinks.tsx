@@ -8,28 +8,24 @@ interface TickerLinksProps {
 
 const FINANCE_LINKS = [
   {
-    label: 'TV',
     title: 'TradingView',
     url: (s: string) => `https://www.tradingview.com/symbols/${s}/`,
-    color: 'bg-blue-50 text-blue-700 hover:bg-blue-100',
+    favicon: 'tradingview.com',
   },
   {
-    label: 'YF',
     title: 'Yahoo Finance',
-    url: (s: string) => `https://finance.yahoo.com/quote/${s}/`,
-    color: 'bg-violet-50 text-violet-700 hover:bg-violet-100',
+    url: (s: string) => `https://finance.yahoo.com/chart/${s}`,
+    favicon: 'finance.yahoo.com',
   },
   {
-    label: 'GF',
     title: 'Google Finance',
-    url: (s: string) => `https://www.google.com/finance/search?q=${s}`,
-    color: 'bg-green-50 text-green-700 hover:bg-green-100',
+    url: (s: string) => `https://www.google.com/finance/quote/${s}:NASDAQ`,
+    favicon: 'google.com',
   },
   {
-    label: 'PP',
-    title: 'Perplexity',
-    url: (s: string) => `https://www.perplexity.ai/finance/${s}`,
-    color: 'bg-teal-50 text-teal-700 hover:bg-teal-100',
+    title: 'TradingView Chart',
+    url: (s: string) => `https://www.tradingview.com/chart/?symbol=NASDAQ%3A${s}`,
+    favicon: 'tradingview.com',
   },
 ];
 
@@ -48,20 +44,27 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
         ${symbol}
       </span>
 
-      {/* Inline buttons — appear right after the ticker text on hover */}
+      {/* Inline icon buttons — appear right after the ticker text on hover */}
       {open && (
         <span className="inline-flex items-center gap-0.5">
           {FINANCE_LINKS.map((link) => (
             <a
-              key={link.label}
+              key={link.title}
               href={link.url(symbol)}
               target="_blank"
               rel="noopener noreferrer"
               title={link.title}
-              className={`text-[11px] font-bold px-1 py-0.5 rounded no-underline leading-none ${link.color}`}
+              className="inline-flex items-center justify-center w-5 h-5 rounded hover:bg-slate-100 transition-colors no-underline"
               onClick={(e) => e.stopPropagation()}
             >
-              {link.label}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`https://www.google.com/s2/favicons?domain=${link.favicon}&sz=16`}
+                alt={link.title}
+                width={14}
+                height={14}
+                className="rounded-sm"
+              />
             </a>
           ))}
         </span>
