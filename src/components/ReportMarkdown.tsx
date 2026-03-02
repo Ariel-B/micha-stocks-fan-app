@@ -42,10 +42,10 @@ function preprocessTickers(content: string): string {
         (match, dollarSym: string | undefined, bareSym: string | undefined) => {
           if (bareSym) {
             if (NON_TICKER_WORDS.has(bareSym)) return match;
-            return `[${match}](ticker://${bareSym})`;
+            return `[${match}](https://t.invalid/${bareSym})`;
           }
           // dollarSym match
-          return `[${match}](ticker://${dollarSym})`;
+          return `[${match}](https://t.invalid/${dollarSym})`;
         },
       );
     })
@@ -81,8 +81,8 @@ export default function ReportMarkdown({ content }: ReportMarkdownProps) {
       if (!href) return <a {...rest}>{children}</a>;
 
       // Ticker links rendered as inline badge with finance shortcuts
-      if (href.startsWith('ticker://')) {
-        const symbol = href.slice(9);
+      if (href.startsWith('https://t.invalid/')) {
+        const symbol = href.slice(18);
         return <TickerLinks symbol={symbol} />;
       }
 
