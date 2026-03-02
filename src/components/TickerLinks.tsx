@@ -44,16 +44,17 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
   }, []);
 
   const scheduleClose = useCallback(() => {
-    closeTimer.current = setTimeout(() => setOpen(false), 120);
+    closeTimer.current = setTimeout(() => setOpen(false), 300);
   }, []);
 
   const handleBadgeEnter = useCallback(() => {
     cancelClose();
     if (badgeRef.current) {
       const rect = badgeRef.current.getBoundingClientRect();
+      // position: fixed — coords are viewport-relative, no scroll offset needed
       setPos({
-        top: rect.bottom + window.scrollY + 4,
-        left: rect.left + window.scrollX,
+        top: rect.bottom + 4,
+        left: rect.left,
       });
     }
     setOpen(true);
@@ -72,7 +73,7 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
         createPortal(
           <span
             dir="ltr"
-            style={{ position: 'absolute', top: pos.top, left: pos.left, zIndex: 9999 }}
+            style={{ position: 'fixed', top: pos.top, left: pos.left, zIndex: 9999 }}
             className="inline-flex items-center gap-0.5 bg-white border border-slate-200 rounded-lg shadow-lg px-1 py-1 whitespace-nowrap"
             onMouseEnter={cancelClose}
             onMouseLeave={scheduleClose}
