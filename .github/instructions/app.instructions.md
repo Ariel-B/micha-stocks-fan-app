@@ -39,6 +39,8 @@ src/
 - Run ESLint before committing: `npm run lint`.
 
 ## Dev Commands
+- Always run these commands from `/Users/arielbroitman/Code/micha-stocks-fan-app/`.
+
 ```bash
 # Install dependencies
 npm install
