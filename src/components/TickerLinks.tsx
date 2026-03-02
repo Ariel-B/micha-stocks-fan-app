@@ -11,22 +11,22 @@ const FINANCE_LINKS = [
   {
     title: 'TradingView',
     url: (s: string) => `https://www.tradingview.com/chart/?symbol=${s}`,
-    favicon: 'tradingview.com',
+    icon: '/icons/tradingview.svg',
   },
   {
     title: 'Yahoo Finance',
     url: (s: string) => `https://finance.yahoo.com/chart/${s}`,
-    favicon: 'finance.yahoo.com',
+    icon: '/icons/yahoo-finance.svg',
   },
   {
     title: 'Google Finance',
     url: (s: string) => `https://www.google.com/finance/quote/${s}`,
-    favicon: 'google.com',
+    icon: '/icons/google-finance.svg',
   },
   {
     title: 'Perplexity',
     url: (s: string) => `https://www.perplexity.ai/finance/${s}`,
-    favicon: 'perplexity.ai',
+    icon: '/icons/perplexity.svg',
   },
 ];
 
@@ -84,15 +84,14 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 title={link.title}
-                className="inline-flex items-center justify-center w-5 h-5 rounded hover:bg-slate-100 transition-colors no-underline"
+                className="inline-flex items-center justify-center w-7 h-7 rounded-md hover:bg-slate-100 transition-colors no-underline"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`https://www.google.com/s2/favicons?domain=${link.favicon}&sz=16`}
+                  src={link.icon}
                   alt={link.title}
-                  width={14}
-                  height={14}
-                  className="rounded-sm"
+                  width={18}
+                  height={18}
                 />
               </a>
             ))}
