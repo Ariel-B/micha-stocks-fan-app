@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 interface TickerLinksProps {
@@ -34,49 +34,48 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const badgeRef = useRef<HTMLSpanElement>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const panelRef = useRef<HTMLSpanElement>(null);
 
-  const cancelClose = useCallback(() => {
-    if (closeTimer.current) {
-      clearTimeout(closeTimer.current);
-      closeTimer.current = null;
-    }
-  }, []);
-
-  const scheduleClose = useCallback(() => {
-    closeTimer.current = setTimeout(() => setOpen(false), 300);
-  }, []);
-
-  const handleBadgeEnter = useCallback(() => {
-    cancelClose();
-    if (badgeRef.current) {
+  // Click-to-toggle the panel
+  const handleClick = () => {
+    if (!open && badgeRef.current) {
       const rect = badgeRef.current.getBoundingClientRect();
-      // position: fixed — coords are viewport-relative, no scroll offset needed
-      setPos({
-        top: rect.bottom + 4,
-        left: rect.left,
-      });
+      setPos({ top: rect.bottom + 4, left: rect.left });
     }
-    setOpen(true);
-  }, [cancelClose]);
+    setOpen((v) => !v);
+  };
+
+  // Close when clicking outside
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        badgeRef.current?.contains(target) ||
+        panelRef.current?.contains(target)
+      )
+        return;
+      setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
 
   return (
     <span
       ref={badgeRef}
-      onMouseEnter={handleBadgeEnter}
-      onMouseLeave={scheduleClose}
-      className="font-semibold text-amber-700 underline decoration-dotted decoration-amber-400 cursor-help"
+      onClick={handleClick}
+      className="font-semibold text-amber-700 underline decoration-dotted decoration-amber-400 cursor-pointer"
     >
       ${symbol}
 
       {open &&
         createPortal(
           <span
+            ref={panelRef}
             dir="ltr"
             style={{ position: 'fixed', top: pos.top, left: pos.left, zIndex: 9999 }}
             className="inline-flex items-center gap-0.5 bg-white border border-slate-200 rounded-lg shadow-lg px-1 py-1 whitespace-nowrap"
-            onMouseEnter={cancelClose}
-            onMouseLeave={scheduleClose}
           >
             {FINANCE_LINKS.map((link) => (
               <a
@@ -86,7 +85,6 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
                 rel="noopener noreferrer"
                 title={link.title}
                 className="inline-flex items-center justify-center w-5 h-5 rounded hover:bg-slate-100 transition-colors no-underline"
-                onClick={(e) => e.stopPropagation()}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
