@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 interface TickerLinksProps {
@@ -34,8 +34,21 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const badgeRef = useRef<HTMLSpanElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleMouseEnter = () => {
+  const cancelClose = useCallback(() => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }, []);
+
+  const scheduleClose = useCallback(() => {
+    closeTimer.current = setTimeout(() => setOpen(false), 120);
+  }, []);
+
+  const handleBadgeEnter = useCallback(() => {
+    cancelClose();
     if (badgeRef.current) {
       const rect = badgeRef.current.getBoundingClientRect();
       setPos({
@@ -44,13 +57,13 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
       });
     }
     setOpen(true);
-  };
+  }, [cancelClose]);
 
   return (
     <span
       ref={badgeRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={handleBadgeEnter}
+      onMouseLeave={scheduleClose}
       className="font-semibold text-amber-700 underline decoration-dotted decoration-amber-400 cursor-help"
     >
       ${symbol}
@@ -61,8 +74,8 @@ export default function TickerLinks({ symbol }: TickerLinksProps) {
             dir="ltr"
             style={{ position: 'absolute', top: pos.top, left: pos.left, zIndex: 9999 }}
             className="inline-flex items-center gap-0.5 bg-white border border-slate-200 rounded-lg shadow-lg px-1 py-1 whitespace-nowrap"
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
+            onMouseEnter={cancelClose}
+            onMouseLeave={scheduleClose}
           >
             {FINANCE_LINKS.map((link) => (
               <a
