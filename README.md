@@ -18,17 +18,24 @@ src/
 │   ├── layout.tsx        # Root layout
 │   ├── page.tsx          # Home / course index page
 │   ├── globals.css       # Global styles
-│   └── lesson/           # Dynamic lesson pages
+│   ├── lesson/           # Dynamic lesson pages
+│   └── reports/          # Market insight reports browser + detail pages
 ├── components/
-│   ├── ConceptCard.tsx   # Card component for concept display
-│   ├── CourseBrowser.tsx # Course browser component
-│   ├── Footer.tsx        # Site footer
-│   ├── InlineMarkdown.tsx# Inline markdown renderer
-│   └── VideoPlayer.tsx   # Embedded YouTube video player
-└── data/
-    ├── course.json       # Generated course data (do not edit manually)
-    ├── sections.json     # Generated section data (do not edit manually)
-    └── sections.ts       # Runtime interface — exports SECTIONS, LESSON_SECTION, SECTION_COLORS, getSectionForLesson, findSection, getLessonNum
+│   ├── ConceptCard.tsx           # Card component for concept display
+│   ├── CourseBrowser.tsx         # Course browser component
+│   ├── Footer.tsx                # Site footer
+│   ├── InlineMarkdown.tsx        # Inline markdown renderer
+│   ├── PrintableReportContent.tsx# Print-friendly report layout
+│   ├── ReportCard.tsx            # Summary card for a single report
+│   ├── ReportMarkdown.tsx        # Markdown renderer for report content
+│   ├── TickerLinks.tsx           # Converts ticker symbols to external links
+│   └── VideoPlayer.tsx           # Embedded YouTube video player
+├── data/
+│   ├── course.json       # Generated course data (do not edit manually)
+│   ├── sections.json     # Generated section data (do not edit manually)
+│   └── sections.ts       # Runtime interface — exports SECTIONS, LESSON_SECTION, SECTION_COLORS, getSectionForLesson, findSection, getLessonNum
+└── lib/
+    └── reports.ts        # Server-side helpers for reading report files from content/reports/
 ```
 
 ## Getting Started

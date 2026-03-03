@@ -4,9 +4,10 @@
 This is the Next.js frontend for the Micha Stocks Course fan site. It displays lessons, transcripts, and course content in an interactive, infographic-style format.
 
 ## Repository Structure
-- `src/app/` — Next.js App Router pages and layouts
+- `src/app/` — Next.js App Router pages and layouts (includes `lesson/[id]/` and `reports/[date]/[time]/`)
 - `src/components/` — Reusable React components
 - `src/data/` — Auto-generated data files (do not edit manually)
+- `src/lib/` — Server-side utility modules (e.g. `reports.ts` reads report files from the pipeline repo)
 - `public/` — Static assets
 
 ## Tech Stack
